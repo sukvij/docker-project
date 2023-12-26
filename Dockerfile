@@ -1,14 +1,16 @@
 FROM golang:1.16-alpine
+
 WORKDIR /app
+COPY . .
 
-COPY go.mod ./
 RUN go mod download
+RUN go build -o /app/go-docker-demo
 
-COPY *.go ./
+FROM alpine:latest
 
-RUN go get github.com/gin-gonic/gin
+WORKDIR /app
+COPY --from=build /app/go-docker-demo .
 
-RUN go build -o /go-docker-demo
 
 EXPOSE 8000
 
