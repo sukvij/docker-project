@@ -1,17 +1,10 @@
-FROM golang:1.16-alpine
+FROM  golang:1.18
 
-WORKDIR /app
+WORKDIR /go/src/app
+
 COPY . .
 
-RUN go mod download
-RUN go build -o /app/go-docker-demo
+RUN go build -o main main.go
 
-FROM alpine:latest
-
-WORKDIR /app
-COPY --from=build /app/go-docker-demo .
-
-
-EXPOSE 8000
 
 CMD [ "/go-docker-demo" ]
