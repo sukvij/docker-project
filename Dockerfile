@@ -1,17 +1,13 @@
-FROM golang:alpine
-
-RUN mkdir /app
-
+FROM golang:1.16-alpine
 WORKDIR /app
 
-ADD go.mod .
-ADD go.sum .
-
+COPY go.mod ./
 RUN go mod download
-ADD . .
 
-RUN go get github.com/githubnemo/CompileDaemon
+COPY *.go ./
 
-EXPOSE 8000
+RUN go build -o /go-docker-demo
 
-ENTRYPOINT CompileDaemon --build="go build main.go" --command=./main
+EXPOSE 8080
+
+CMD [ "/go-docker-demo" ]
