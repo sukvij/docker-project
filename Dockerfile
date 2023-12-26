@@ -6,6 +6,8 @@ RUN go mod download
 
 COPY *.go ./
 
+RUN go get github.com/gin-gonic/gin
+
 RUN go build -o /go-docker-demo
 
 EXPOSE 8000
