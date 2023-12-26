@@ -1,6 +1,17 @@
-FROM golang:1.20.5-alpine3.18
+FROM golang:alpine
+
+RUN mkdir /app
+
 WORKDIR /app
-COPY . /app
-RUN go build /app
+
+ADD go.mod .
+ADD go.sum .
+
+RUN go mod download
+ADD . .
+
+RUN go get github.com/githubnemo/CompileDaemon
+
 EXPOSE 8000
-ENTRYPOINT [ "./vijju" ]
+
+ENTRYPOINT CompileDaemon --build="go build main.go" --command=./main
