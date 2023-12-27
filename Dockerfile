@@ -1,20 +1,9 @@
 # use official Golang image
-FROM golang:1.16.3-alpine3.13
+FROM golang:1.20.3-alpine3.17
 
-# set working directory
+RUN mkdir /app
+ADD . /app
 WORKDIR /app
+RUN go build -o main .
 
-# Copy the source code
-COPY . . 
-
-# Download and install the dependencies
-RUN go get -d -v ./...
-
-# Build the Go app
-RUN go build -o api .
-
-#EXPOSE the port
-EXPOSE 8000
-
-# Run the executable
-CMD ["./api"]
+CMD [ "/app/main" ]
