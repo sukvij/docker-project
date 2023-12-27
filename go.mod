@@ -1,8 +1,11 @@
-module go-docker-demo
+module api
 
 go 1.20
 
-require github.com/gin-gonic/gin v1.9.1
+require (
+	github.com/gin-gonic/gin v1.9.1
+	github.com/lib/pq v1.10.7
+)
 
 require (
 	github.com/bytedance/sonic v1.9.1 // indirect

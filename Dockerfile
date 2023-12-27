@@ -1,10 +1,20 @@
-FROM  golang:1.18
+# use official Golang image
+FROM golang:1.16.3-alpine3.13
 
-WORKDIR /go/src/app
+# set working directory
+WORKDIR /app
 
-COPY . .
+# Copy the source code
+COPY . . 
 
-RUN go build -o main main.go
+# Download and install the dependencies
+RUN go get -d -v ./...
 
+# Build the Go app
+RUN go build -o api .
 
-CMD [ "/go-docker-demo" ]
+#EXPOSE the port
+EXPOSE 8000
+
+# Run the executable
+CMD ["./api"]
