@@ -9,7 +9,7 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.GET("/api/account", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello, brosephs!",
 		})
