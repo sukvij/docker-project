@@ -1,9 +1,28 @@
-# use official Golang image
-FROM golang:1.20.3-alpine3.17
+# Use the official Golang image as the builder
+FROM golang:alpine as builder
 
-RUN mkdir /app
-ADD . /app
-WORKDIR /app
-RUN go build -o main .
+WORKDIR /go/src/app
 
-CMD [ "/app/main" ]
+ENV GO111MODULE=on
+
+# RUN go get github.com/cospare/reflex
+
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
+
+COPY . .
+
+RUN go build -o ./run .
+
+# Use a minimal Alpine image for the final container
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+
+# Copy the executable from the builder
+COPY --from=builder /go/src/app/run .
+
+EXPOSE 8000
+CMD ["./run"]

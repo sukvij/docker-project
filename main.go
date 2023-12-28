@@ -1,23 +1,18 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	_ "github.com/lib/pq"
-)
+	"net/http"
 
-type User struct {
-	ID    int    `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
-}
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
 	router := gin.Default()
 
-	router.GET("/user", getAllUser)
+	router.GET("/api/account", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Hello, brosephs!",
+		})
+	})
 	router.Run(":8000")
-}
-
-func getAllUser(ctx *gin.Context) {
-	ctx.JSON(200, "great")
 }
