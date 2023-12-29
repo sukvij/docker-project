@@ -14,7 +14,7 @@ RUN go mod download
 COPY *.go ./
 
 # Build
-RUN CGO_ENABLED=0 GOOS=linux go build -o /vijju-docker1
+RUN CGO_ENABLED=0 GOOS=linux go build -o /vijju-docker
 
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
 # But we can (optionally) document in the Dockerfile what ports
@@ -23,4 +23,4 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /vijju-docker1
 EXPOSE 8000
 
 # Run
-CMD [ "/vijju-docker1" ]
+CMD [ "/vijju-docker" ]
