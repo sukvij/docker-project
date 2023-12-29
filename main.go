@@ -6,13 +6,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type User struct {
+	Id   string
+	Name string
+}
+
+var users []*User
+
 func main() {
 	router := gin.Default()
-
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello, brosephs!",
-		})
-	})
+	users = append(users, &User{Id: "1", Name: "vijendra"})
+	router.GET("/", getAllUsers)
 	router.Run(":8000")
+}
+
+func getAllUsers(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, users)
 }
